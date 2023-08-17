@@ -1,18 +1,19 @@
-const SLICE_COUNT = 10;
+const SLICE_COUNT = 12;
 
 function setup_pScope(pScope){
   pScope.output_mode(ANIMATED_DISK);
   pScope.scale_for_screen(true);
-  pScope.draw_layer_boundaries(true);
+  pScope.draw_layer_boundaries(false);
   pScope.set_direction(CCW);
   pScope.set_slice_count(SLICE_COUNT);
+  pScope.load_image("lantern" , "png");
 }
 
 function setup_layers(pScope){
 
   new PLayer(null, 220);  //lets us draw the whole circle background, ignoring the boundaries
 
-  var layer1 = new PLayer(faces);
+  var layer1 = new PLayer(lantern);
   layer1.mode( SWIRL(5) );
   layer1.set_boundary( 200, 1000 );
 
@@ -20,6 +21,16 @@ function setup_layers(pScope){
   layer2.mode( RING );
   layer2.set_boundary( 0, 400 );
 }
+
+function lantern(x, y, animation, pScope){
+  
+  scale(0.3);
+  var lanternx = animation.wave(2)*400
+  pScope.draw_image("lantern",lanternx,y);
+
+
+}
+
 
 function faces(x, y, animation, pScope){
   
@@ -40,10 +51,10 @@ function squares(x, y, animation, pScope){
   let backgroundArcStart = 270 - angleOffset;
   let backgroundArcEnd = 270 + angleOffset;
 
-  fill(66, 135, 245)
+  fill(13, 14, 61)
   arc(x,y,800,800,backgroundArcStart,backgroundArcEnd); // draws "pizza slice" in the background
 
-  fill(255)
+  fill(225)
   rect(-10,-300-animation.wave()*50,20,20) // .wave is a cosine wave btw
 
 }
