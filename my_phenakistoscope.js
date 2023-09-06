@@ -25,7 +25,7 @@ function setup_layers(pScope){
 function lantern(x, y, animation, pScope){
   
   scale(0.3);
-  var lanternx = animation.wave(2)*400
+  var lanternx = animation.wave(2)*300
   pScope.draw_image("lantern",lanternx,y);
 
 
