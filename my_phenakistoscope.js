@@ -1,60 +1,72 @@
 const SLICE_COUNT = 12;
 
 function setup_pScope(pScope){
-  pScope.output_mode(ANIMATED_DISK);
+  pScope.output_mode(OUTPUT_GIF(1000));
   pScope.scale_for_screen(true);
   pScope.draw_layer_boundaries(false);
   pScope.set_direction(CCW);
   pScope.set_slice_count(SLICE_COUNT);
+  pScope.load_image_sequence("lanternRelease", "png", 25);
   pScope.load_image("lantern" , "png");
+  pScope.load_image("sun" , "png");
+  pScope.load_image("cloud" , "png");
+
 }
 
 function setup_layers(pScope){
+ new PLayer(null, 14, 16, 61);  //lets us draw the whole circle background, ignoring the boundaries
 
-  new PLayer(null, 220);  //lets us draw the whole circle background, ignoring the boundaries
+ 
+ var sunImage = new PLayer(sun);
+ sunImage.mode(RING);
+ sunImage.set_boundary (0, 800);
+ 
+ var cloudImage = new PLayer(cloud);
+ cloudImage.mode(RING);
+ cloudImage.set_boundary (800, 2000);
 
-  var layer1 = new PLayer(lantern);
-  layer1.mode( SWIRL(5) );
-  layer1.set_boundary( 200, 1000 );
 
-  var layer2 = new PLayer(squares);
-  layer2.mode( RING );
-  layer2.set_boundary( 0, 400 );
+  var lanternSequence = new PLayer(release);
+  lanternSequence.mode(RING);
+  lanternSequence.set_boundary( 200, 1000 );
+
+  var lanternImage = new PLayer(lantern);
+  lanternImage.mode(SWIRL(8));
+  lanternImage.set_boundary( 0, 500 );
+
+
+
+
+}
+
+
+function release(x, y, animation, pScope){
+  translate(x,y);
+  scale(1);
+  pScope.draw_image_from_sequence("lanternRelease", 0, 600, animation.frame);
+
+
 }
 
 function lantern(x, y, animation, pScope){
-  
-  scale(0.3);
-  var lanternx = animation.wave(2)*300
+  scale(0.24);
+  var lanternx = animation.wave(1)*200
   pScope.draw_image("lantern",lanternx,y);
+   
 
+}
+
+function sun(x, y, animation, pScope){
+  scale(1);
+  var sunx = animation.frame //wave(1)*200
+  pScope.draw_image("sun",sunx,y);
+   
 
 }
 
 
-function faces(x, y, animation, pScope){
-  
-  scale(animation.frame*2);
-
-  ellipse(0,0,50,50); // draw head
-  fill(30);
-  ellipse(-10,-10,10,10); //draw eye
-  ellipse(10,-10,10,10); // draw eye
-  arc(0,10,20,10,0,180); // draw mouth
-
-}
-
-function squares(x, y, animation, pScope){
-
-  // this is how you set up a background for a specific layer
-  let angleOffset = (360 / SLICE_COUNT) / 2
-  let backgroundArcStart = 270 - angleOffset;
-  let backgroundArcEnd = 270 + angleOffset;
-
-  fill(13, 14, 61)
-  arc(x,y,800,800,backgroundArcStart,backgroundArcEnd); // draws "pizza slice" in the background
-
-  fill(225)
-  rect(-10,-300-animation.wave()*50,20,20) // .wave is a cosine wave btw
+function cloud(x, y, animation, pScope){
+  scale(1);
+  pScope.draw_image("cloud",x,y);
 
 }
