@@ -43,12 +43,13 @@ function setup_layers(pScope){
 
   var cloudImage = new PLayer(cloud);
   cloudImage.mode(RING);
-  cloudImage.set_boundary(800,100);
+  cloudImage.set_boundary(0,100);
 
 
   var sunImage = new PLayer(sun);
   sunImage.mode(RING);
   sunImage.set_boundary(0,0);
+
 
 
 }
@@ -86,10 +87,15 @@ function firstRing(x, y, animation, pScope){
 
 
 function lantern(x, y, animation, pScope){
-  scale(0.1);
+ scale(0.1);
+
+ 
+  scale(2*animation.frame);
+
   var lanternx = animation.wave(5)*500
   pScope.draw_image("lantern",lanternx,y);
-  
+
+
 
 }
 
@@ -115,3 +121,4 @@ function cloud(x,y,animation,pScope){
   pScope.draw_image("cloud",x,y);
 
 }
+
