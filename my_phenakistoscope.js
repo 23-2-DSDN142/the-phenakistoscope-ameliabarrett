@@ -7,7 +7,7 @@ function setup_pScope(pScope){
   pScope.set_direction(CCW);
   pScope.set_slice_count(SLICE_COUNT);
   pScope.load_image("sun" , "png");
-  //pScope.load_image_sequence("lanternRelease", "png", 25);
+  pScope.load_image_sequence("lanternRelease", "png", 25);
   pScope.load_image("lantern" , "png");
   pScope.load_image("cloud" , "png");
 
@@ -33,17 +33,17 @@ function setup_layers(pScope){
  ringOne.mode(RING);
  ringOne.set_boundary(400, 600);
 
-  //var lanternSequence = new PLayer(release);
-  //lanternSequence.mode(RING);
-  //lanternSequence.set_boundary( 200, 1000 );
+  var lanternSequence = new PLayer(release);
+  lanternSequence.mode(RING);
+  lanternSequence.set_boundary( 200, 1000 );
 
   var lanternImage = new PLayer(lantern);
   lanternImage.mode(SWIRL(8));
-  lanternImage.set_boundary( 0, 800 );
+  lanternImage.set_boundary( 350, 800 );
 
-  var cloudImage = new PLayer(cloud);
-  cloudImage.mode(RING);
-  cloudImage.set_boundary(0,100);
+  //var cloudImage = new PLayer(cloud);
+  //cloudImage.mode(RING);
+  //cloudImage.set_boundary(800,100);
 
 
   var sunImage = new PLayer(sun);
@@ -63,37 +63,43 @@ function setup_layers(pScope){
 //}
 
 function fourthRing(x, y, animation, pScope){
-  pScope.fill_background(3, 41, 49, 60);
-  
+  pScope.fill_background(14, 16, 61); //3, 41, 49, 60
 }
 
 function thirdRing(x, y, animation, pScope){
-  pScope.fill_background(16, 39, 82);
+  pScope.fill_background(14, 16, 61); //16, 39, 82
   
   
 }
 
 function secondRing(x, y, animation, pScope){
-  pScope.fill_background(27, 55, 107);
+  pScope.fill_background(14, 16, 61); //27, 55, 107
   
 }
 
 function firstRing(x, y, animation, pScope){
-  pScope.fill_background(10, 41, 99);
+  pScope.fill_background(14, 16, 61); //10, 41, 99
   
 }
 
 
-
-
 function lantern(x, y, animation, pScope){
- scale(0.1);
-
+  scale(0.08);
  
-  scale(2*animation.frame);
+  
+   scale(2*animation.frame);
+ 
+   var lanternx = animation.wave(5)*500
+   pScope.draw_image("lantern",lanternx,y);
+ 
+ 
+ 
+ }
 
-  var lanternx = animation.wave(5)*500
-  pScope.draw_image("lantern",lanternx,y);
+function release(x, y, animation, pScope){
+ translate(x,y-370);
+ scale(1);
+ pScope.draw_image_from_sequence("lanternRelease", 0, 0, animation.frame);
 
 
 
@@ -112,13 +118,18 @@ function sun(x,y,animation,pScope){
 
 }
 
-function cloud(x,y,animation,pScope){
+//function cloud(x,y,animation,pScope){
  
 
   translate(0,870);
   //scale(animation.wave()*1);
  scale(0.7);
+
+ 
+ rotate(1*animation.frame);
+ scale(2*animation.frame);
+
   pScope.draw_image("cloud",x,y);
 
-}
+//}
 
