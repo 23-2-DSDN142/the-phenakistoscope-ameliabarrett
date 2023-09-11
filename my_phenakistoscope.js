@@ -9,7 +9,7 @@ function setup_pScope(pScope){
   pScope.load_image("sun" , "png");
   pScope.load_image_sequence("lanternRelease", "png", 25);
   pScope.load_image("lantern" , "png");
-  pScope.load_image("cloud" , "png");
+  pScope.load_image("stars" , "png");
 
 }
 
@@ -39,12 +39,15 @@ function setup_layers(pScope){
 
   var lanternImage = new PLayer(lantern);
   lanternImage.mode(SWIRL(8));
-  lanternImage.set_boundary( 350, 800 );
+  lanternImage.set_boundary( 380, 800 );
 
-  //var cloudImage = new PLayer(cloud);
-  //cloudImage.mode(RING);
-  //cloudImage.set_boundary(800,100);
+  var starImage = new PLayer(stars);
+  starImage.mode(RING);
+  starImage.set_boundary(950,20);
 
+  var starsColor = new PLayer(allStars)
+ starsColor.mode (RING);
+ starsColor.set_boundary (950, 20);
 
   var sunImage = new PLayer(sun);
   sunImage.mode(RING);
@@ -82,6 +85,40 @@ function firstRing(x, y, animation, pScope){
   
 }
 
+function allStars(x,y,animation,pScope){
+  
+  scale(animation.wave*2);
+  noStroke();
+  fill(255); //white
+  ellipse(30, 950, 15, 15); //draws circle
+  ellipse(90, 980, 15, 15); //draws circle
+  ellipse(70, 920, 15, 15); //draws circle
+  ellipse(-90, 880, 15, 15); //draws circle
+  ellipse(30, 850, 15, 15); //draws circle
+  ellipse(-50, 900, 15, 15); //draws circle
+  ellipse(-100, 820, 15, 15); //draws circle
+  ellipse(-300, 820, 15, 15); //draws circle
+  ellipse(-280, 920, 15, 15); //draws circle
+  ellipse(-260, 850, 15, 15); //draws circle
+  ellipse(-230, 950, 15, 15); //draws circle
+  ellipse(-200, 880, 15, 15); //draws circle
+
+  ellipse(300, 820, 15, 15); //draws circle
+  ellipse(300, 820, 15, 15); //draws circle
+ 
+
+  ellipse(-30, 850, 15, 15); //draws circle
+ //between 300 - -300x and 950 - 850y
+ }
+
+function stars(x,y,animation,pScope){
+ translate(80,990);
+ scale(0.8);
+ rotate(10*animation.frame);
+ //scale(2*animation.frame);
+  pScope.draw_image("stars",x,y);
+}
+
 
 function lantern(x, y, animation, pScope){
   scale(0.08);
@@ -117,19 +154,3 @@ function sun(x,y,animation,pScope){
   pScope.draw_image("sun",x,y);
 
 }
-
-//function cloud(x,y,animation,pScope){
- 
-
-  translate(0,870);
-  //scale(animation.wave()*1);
- scale(0.7);
-
- 
- rotate(1*animation.frame);
- scale(2*animation.frame);
-
-  pScope.draw_image("cloud",x,y);
-
-//}
-
