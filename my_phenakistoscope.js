@@ -33,23 +33,28 @@ function setup_layers(pScope){
  ringOne.mode(RING);
  ringOne.set_boundary(400, 600);
 
-  var lanternSequence = new PLayer(release);
+  var lanternSequence = new PLayer(release); //people releasing lantern sequence
   lanternSequence.mode(RING);
   lanternSequence.set_boundary( 200, 1000 );
 
-  var lanternImage = new PLayer(lantern);
-  lanternImage.mode(SWIRL(8));
-  lanternImage.set_boundary( 380, 800 );
 
-  var starImage = new PLayer(stars);
+  var starImage = new PLayer(stars); //shaped stars rotating at top of PScope
   starImage.mode(RING);
   starImage.set_boundary(950,20);
 
-  var starsColor = new PLayer(allStars)
+  var starsStay = new PLayer(stillStars) //still, plain white circle stars with no animation
+ starsStay.mode (RING);
+ starsStay.set_boundary (950, 20);
+
+  var starsColor = new PLayer(animatedStars) //colour changing circle stars
  starsColor.mode (RING);
  starsColor.set_boundary (950, 20);
 
-  var sunImage = new PLayer(sun);
+ var lanternImage = new PLayer(lantern); //lanterns going out
+ lanternImage.mode(SWIRL(8));
+ lanternImage.set_boundary( 380, 1100 );
+
+  var sunImage = new PLayer(sun); // centre sun
   sunImage.mode(RING);
   sunImage.set_boundary(0,0);
 
@@ -57,40 +62,49 @@ function setup_layers(pScope){
 
 }
 
-//function release(x, y, animation, pScope){
-  translate(x,y);
-  scale(1);
-  pScope.draw_image_from_sequence("lanternRelease", 0, 600, animation.frame);
-
-
-//}
-
 function fourthRing(x, y, animation, pScope){
   pScope.fill_background(14, 16, 61); //3, 41, 49, 60
 }
 
 function thirdRing(x, y, animation, pScope){
   pScope.fill_background(14, 16, 61); //16, 39, 82
-  
-  
 }
 
 function secondRing(x, y, animation, pScope){
-  pScope.fill_background(14, 16, 61); //27, 55, 107
-  
+  pScope.fill_background(16, 39, 82); // 
 }
 
 function firstRing(x, y, animation, pScope){
   pScope.fill_background(14, 16, 61); //10, 41, 99
-  
 }
 
-function allStars(x,y,animation,pScope){
+
+
+function stillStars(x,y,animation,pScope){
+  scale(animation.wave*1);
+   noStroke();
+   fill(255);
+   ellipse(10, 950, 15, 15); //draws circle
+   ellipse(90, 980, 15, 15); //draws circle
+   ellipse(-90, 880, 15, 15); //draws circle
+   ellipse(-50, 900, 15, 15); //draws circle
+   ellipse(-300, 820, 15, 15); //draws circle
+   ellipse(-230, 950, 15, 15); //draws circle
+   ellipse(-200, 880, 15, 15); //draws circle
+  }
+
+
+function animatedStars(x,y,animation,pScope){
   
-  scale(animation.wave*2);
+ let StartColour = color(14, 16, 61);  //navy
+ let endColour = color(255); //white
+  let animatingColour = lerpColor(StartColour, endColour, animation.frame);
+
+  translate(70, -40);
+  scale(animation.wave*50);
   noStroke();
-  fill(255); //white
-  ellipse(30, 950, 15, 15); //draws circle
+  fill(animatingColour);
+  ellipse(10, 950, 15, 15); //draws circle
   ellipse(90, 980, 15, 15); //draws circle
   ellipse(70, 920, 15, 15); //draws circle
   ellipse(-90, 880, 15, 15); //draws circle
@@ -102,19 +116,16 @@ function allStars(x,y,animation,pScope){
   ellipse(-260, 850, 15, 15); //draws circle
   ellipse(-230, 950, 15, 15); //draws circle
   ellipse(-200, 880, 15, 15); //draws circle
-
   ellipse(300, 820, 15, 15); //draws circle
   ellipse(300, 820, 15, 15); //draws circle
- 
-
   ellipse(-30, 850, 15, 15); //draws circle
- //between 300 - -300x and 950 - 850y
  }
 
+
 function stars(x,y,animation,pScope){
- translate(80,990);
- scale(0.8);
- rotate(10*animation.frame);
+ translate(220,995);
+ scale(0.5);
+ rotate(180*animation.frame);
  //scale(2*animation.frame);
   pScope.draw_image("stars",x,y);
 }
@@ -122,24 +133,16 @@ function stars(x,y,animation,pScope){
 
 function lantern(x, y, animation, pScope){
   scale(0.08);
- 
-  
    scale(2*animation.frame);
  
    var lanternx = animation.wave(5)*500
    pScope.draw_image("lantern",lanternx,y);
- 
- 
- 
  }
 
 function release(x, y, animation, pScope){
  translate(x,y-370);
  scale(1);
  pScope.draw_image_from_sequence("lanternRelease", 0, 0, animation.frame);
-
-
-
 }
 
 function sun(x,y,animation,pScope){
@@ -147,10 +150,8 @@ function sun(x,y,animation,pScope){
   let backgroundArcStart = 270 - angleOffset;
   let backgroundArcEnd = 270 + angleOffset;
   fill(14, 16, 61)
-  arc(x,y,500,500,backgroundArcStart,backgroundArcEnd); // draws "pizza slice" in the background
-  
+  arc(x,y,500,500,backgroundArcStart,backgroundArcEnd);
   scale(animation.frame*2);
-
   pScope.draw_image("sun",x,y);
 
 }
