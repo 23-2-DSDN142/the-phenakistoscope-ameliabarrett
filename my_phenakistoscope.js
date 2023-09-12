@@ -7,7 +7,7 @@ function setup_pScope(pScope){
   pScope.set_direction(CCW);
   pScope.set_slice_count(SLICE_COUNT);
   pScope.load_image("sun" , "png");
-  pScope.load_image_sequence("lanternRelease", "png", 25);
+  pScope.load_image_sequence("lanternRelease", "png", 26);
   pScope.load_image("lantern" , "png");
   pScope.load_image("stars" , "png");
 
@@ -52,7 +52,7 @@ function setup_layers(pScope){
 
  var lanternImage = new PLayer(lantern); //lanterns going out
  lanternImage.mode(SWIRL(8));
- lanternImage.set_boundary( 380, 1100 );
+ lanternImage.set_boundary( 420, 1100 );
 
   var sunImage = new PLayer(sun); // centre sun
   sunImage.mode(RING);
@@ -126,22 +126,23 @@ function stars(x,y,animation,pScope){
  translate(220,995);
  scale(0.5);
  rotate(180*animation.frame);
- //scale(2*animation.frame);
+
   pScope.draw_image("stars",x,y);
 }
 
 
+
 function lantern(x, y, animation, pScope){
   scale(0.08);
-   scale(2*animation.frame);
- 
-   var lanternx = animation.wave(5)*500
+   scale(2.2*animation.frame);
+   translate(x+50, y);
+   var lanternx = animation.wave(5)*600
    pScope.draw_image("lantern",lanternx,y);
  }
 
 function release(x, y, animation, pScope){
  translate(x,y-370);
- scale(1);
+ scale(0.12);
  pScope.draw_image_from_sequence("lanternRelease", 0, 0, animation.frame);
 }
 
