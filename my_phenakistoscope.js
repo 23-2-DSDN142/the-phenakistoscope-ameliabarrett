@@ -66,6 +66,7 @@ function thirdRing(x, y, animation, pScope){
 
 function secondRing(x, y, animation, pScope){
   pScope.fill_background(16, 39, 82); //lighter navy
+
 }
 
 function firstRing(x, y, animation, pScope){
